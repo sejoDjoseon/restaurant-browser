@@ -1,9 +1,13 @@
 
-FROM golang:1.9-alpine
+FROM golang:alpine
 RUN mkdir /app 
 ADD . /app/ 
-WORKDIR /app 
+WORKDIR /app
+
+RUN go mod tidy
+
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
+
 CMD ["/app/main"]
 
 EXPOSE 80

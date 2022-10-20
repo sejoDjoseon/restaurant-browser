@@ -1,4 +1,4 @@
-TAG=example
+TAG=restaurant-browser
 VERSION=0.1
 IMAGE=go-server
 HOST_PORT=9000
@@ -41,7 +41,12 @@ run:
 	-dt postgres\:latest
 
 	podman run -dt --pod=${TAG} --name=backend     \
-	-e POSTGRES_PORT=${POSTGRES_PORT} $(IMAGE)
+	-e POSTGRES_HOST=localhost                     \
+	-e POSTGRES_PORT=${POSTGRES_PORT}              \
+	-e POSTGRES_USER=${POSTGRES_USER}              \
+	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      \
+	-e DB_NAME=${TAG}                              \
+	$(IMAGE)
 
 
 rerun:

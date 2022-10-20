@@ -1,9 +1,12 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"net/http"
 	"os"
+
+	_ "github.com/lib/pq"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -15,6 +18,20 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	postgresHost := os.Getenv("POSTGRES_HOST")
+	postgresPort := os.Getenv("POSTGRES_PORT")
+	postgresUser := os.Getenv("POSTGRES_USER")
+	postgresPassw := os.Getenv("POSTGRES_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		postgresHost, postgresPort, postgresUser, postgresPassw, dbName)
+	_, err := sql.Open("postgres", psqlInfo)
+	if err != nil {
+		panic(err)
+	}
+
 	fmt.Fprintf(os.Stdout, "Web Server started. Listening on 0.0.0.0:80\n")
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":80", nil)
