@@ -21,22 +21,19 @@ func NewHttpServer(ctx context.Context, ec env.EnvApp, db database.Database) Ser
 		Addr: (fmt.Sprintf(":%s", ec.SERVER_PORT)),
 	}
 
-	return &HttpServer{
+	server := &HttpServer{
 		svr: httpServer,
 		ctx: ctx,
 		db:  db,
 		ec:  ec,
 	}
+
+	server.routes()
+
+	return server
 }
 
 func (s *HttpServer) Run() error {
-	http.HandleFunc("/", handler)
 	fmt.Fprintf(os.Stdout, "Web Server started. Listening on 0.0.0.0:%s\n", s.ec.SERVER_PORT)
 	return s.svr.ListenAndServe()
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	var name, _ = os.Hostname()
-
-	fmt.Fprintf(w, "<h1>This request was processed by host: %s</h1>\n", name)
 }
