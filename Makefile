@@ -10,6 +10,7 @@ POD_PORT=80
 POSTGRES_DB=dev
 POSTGRES_USER=postgres-dev
 POSTGRES_PASSWORD=secretPassword
+POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 
 # PGADMIN
@@ -30,7 +31,10 @@ run:
 		echo pod exists; \
 	else \
 		echo creating pod; \
-		podman pod create --name ${TAG} -p ${HOST_PORT}\:${POD_PORT} -p ${HOST_PGADMIN_PORT}\:${POD_PGADMIN_PORT}; \
+		podman pod create --name ${TAG} \
+		-p ${HOST_PORT}\:${POD_PORT} \
+		-p ${HOST_PGADMIN_PORT}\:${POD_PGADMIN_PORT} \
+		-p ${BACKEND_PORT}\:${BACKEND_PORT}; \
 	fi
 	
 	podman run --pod=${TAG}                                   \
@@ -46,10 +50,11 @@ run:
 	-dt postgres\:latest
 
 	podman run -dt --pod=${TAG} --name=backend     \
-	-e POSTGRES_HOST=localhost                     \
-	-e POSTGRES_PORT=${POSTGRES_PORT}              \
-	-e POSTGRES_USER=${POSTGRES_USER}              \
-	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      \
+	-e PORT=${BACKEND_PORT}                        \
+	-e DB_HOST=${POSTGRES_HOST}                    \
+	-e DB_PORT=${POSTGRES_PORT}                    \
+	-e DB_USER=${POSTGRES_USER}                    \
+	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
 	-e DB_NAME=${TAG}                              \
 	$(BACKEND)
 
@@ -64,10 +69,11 @@ rerun-b:
 	podman stop backend && podman rm -f backend
 
 	podman run -dt --pod=${TAG} --name=backend     \
-	-e POSTGRES_HOST=localhost                     \
-	-e POSTGRES_PORT=${POSTGRES_PORT}              \
-	-e POSTGRES_USER=${POSTGRES_USER}              \
-	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      \
+	-e PORT=${BACKEND_PORT}                        \
+	-e DB_HOST=${POSTGRES_HOST}                    \
+	-e DB_PORT=${POSTGRES_PORT}                    \
+	-e DB_USER=${POSTGRES_USER}                    \
+	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
 	-e DB_NAME=${TAG}                              \
 	$(BACKEND)
 
