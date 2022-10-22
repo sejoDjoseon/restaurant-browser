@@ -1,6 +1,8 @@
 TAG=restaurant-browser
 VERSION=0.1
-IMAGE=go-server
+BACKEND=go-server
+BACKEND_PORT=8000
+FRONTEND=react-app
 HOST_PORT=9000
 POD_PORT=80
 
@@ -17,10 +19,13 @@ HOST_PGADMIN_PORT=9001
 POD_PGADMIN_PORT=9001
 
 build:
-	podman build --tag $(IMAGE)\:$(VERSION) -f ./backend/Containerfile
+	podman build --tag $(BACKEND)\:$(VERSION) -f ./backend/Containerfile
+	podman build --tag $(FRONTEND)\:$(VERSION) -f ./frontend/Containerfile
 
 run:
-	podman build --tag $(IMAGE)\:$(VERSION) -f ./backend/Containerfile
+	podman build --tag $(BACKEND)\:$(VERSION) -f ./backend/Containerfile
+	podman build --tag $(FRONTEND)\:$(VERSION) -f ./frontend/Containerfile
+
 	if podman pod exists ${TAG}; then \
 		echo pod exists; \
 	else \
@@ -46,16 +51,35 @@ run:
 	-e POSTGRES_USER=${POSTGRES_USER}              \
 	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      \
 	-e DB_NAME=${TAG}                              \
-	$(IMAGE)
+	$(BACKEND)
+
+	podman run -dt --pod=${TAG} --name=frontend    \
+	-e BACKEND_PORT=${BACKEND_PORT}                \
+	$(FRONTEND)
 
 
-rerun:
-	podman build --tag $(IMAGE)\:$(VERSION) -f ./backend/Containerfile
+rerun-b:
+	podman build --tag $(BACKEND)\:$(VERSION) -f ./backend/Containerfile
 
 	podman stop backend && podman rm -f backend
 
 	podman run -dt --pod=${TAG} --name=backend     \
-	-e POSTGRES_PORT=${POSTGRES_PORT} $(IMAGE)
+	-e POSTGRES_HOST=localhost                     \
+	-e POSTGRES_PORT=${POSTGRES_PORT}              \
+	-e POSTGRES_USER=${POSTGRES_USER}              \
+	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD}      \
+	-e DB_NAME=${TAG}                              \
+	$(BACKEND)
+
+
+rerun-f:
+	podman build --tag $(FRONTEND)\:$(VERSION) -f ./frontend/Containerfile
+	
+	podman stop frontend && podman rm -f frontend
+
+	podman run -dt --pod=${TAG} --name=frontend    \
+	-e BACKEND_PORT=${BACKEND_PORT}                \
+	$(FRONTEND))
 
 
 #   Deletes pod if exists
