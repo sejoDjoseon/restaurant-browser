@@ -17,10 +17,10 @@ HOST_PGADMIN_PORT=9001
 POD_PGADMIN_PORT=9001
 
 build:
-	podman build --tag $(IMAGE)\:$(VERSION) -f ./Containerfile
+	podman build --tag $(IMAGE)\:$(VERSION) -f ./backend/Containerfile
 
 run:
-	podman build --tag $(IMAGE)\:$(VERSION) -f ./Containerfile
+	podman build --tag $(IMAGE)\:$(VERSION) -f ./backend/Containerfile
 	if podman pod exists ${TAG}; then \
 		echo pod exists; \
 	else \
@@ -50,7 +50,7 @@ run:
 
 
 rerun:
-	podman build --tag $(IMAGE)\:$(VERSION) -f ./Containerfile
+	podman build --tag $(IMAGE)\:$(VERSION) -f ./backend/Containerfile
 
 	podman stop backend && podman rm -f backend
 
@@ -66,8 +66,8 @@ clean:
 
 # DEVELOPMENT
 ROOT                    := $(PWD)
-GO_HTML_COV             := ./coverage.html
-GO_TEST_OUTFILE         := ./c.out
+GO_HTML_COV             := ./backend_coverage.html
+GO_TEST_OUTFILE         := ./backend_c.out
 GOLANG_PODMAN_IMAGE     := golang\:1.19
 
 #   Format according to gofmt: https://github.com/cytopia/podman-gofmt
@@ -82,14 +82,8 @@ else
 endif
 
 test:
-	podman run --rm -w /app -v ${ROOT}\:/app ${GOLANG_PODMAN_IMAGE} go test ./... -coverprofile=${GO_TEST_OUTFILE}
+	podman run --rm -w /app -v ${ROOT}\:/app ${GOLANG_PODMAN_IMAGE} go test ./backend/... -coverprofile=${GO_TEST_OUTFILE}
 	podman run --rm -w /app -v ${ROOT}\:/app ${GOLANG_PODMAN_IMAGE} go tool cover -html=${GO_TEST_OUTFILE} -o ${GO_HTML_COV}
 
 lint:
-	podman run --rm -v ${ROOT}:/data cytopia/golint .
-
-bash:
-	podman run -it \
-		-w /app \
-		-v ${ROOT}\:/app \
-		--name=${GOLANG_PODMAN_IMAGE} /bin/bash
+	podman run --rm -v ${ROOT}:/data cytopia/golint ./backend
