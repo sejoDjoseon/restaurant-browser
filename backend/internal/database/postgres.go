@@ -28,11 +28,11 @@ func (p *PostgresSQL) ping(db *sql.DB) error {
 
 func (p *PostgresSQL) ConnectDB() error {
 	dataSN := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		p.config.DB_HOST,
-		p.config.DB_PORT,
+		"postgresql://%s:%s@%s:%s/%s?sslmode=disable",
 		p.config.DB_USER,
 		p.config.DB_PASSWORD,
+		p.config.DB_HOST,
+		p.config.DB_PORT,
 		p.config.DB_NAME,
 	)
 

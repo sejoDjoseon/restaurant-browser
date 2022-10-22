@@ -55,7 +55,7 @@ run:
 	-e DB_PORT=${POSTGRES_PORT}                    \
 	-e DB_USER=${POSTGRES_USER}                    \
 	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
-	-e DB_NAME=${TAG}                              \
+	-e DB_NAME=postgres                            \
 	$(BACKEND)
 
 	podman run -dt --pod=${TAG} --name=frontend    \
@@ -74,7 +74,7 @@ rerun-b:
 	-e DB_PORT=${POSTGRES_PORT}                    \
 	-e DB_USER=${POSTGRES_USER}                    \
 	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
-	-e DB_NAME=${TAG}                              \
+	-e DB_NAME=postgres                            \
 	$(BACKEND)
 
 
