@@ -1,11 +1,12 @@
 package cmd
 
 import (
-	"database/sql"
+	"context"
 	"fmt"
 	"net/http"
 	"os"
 	"restaurant-browser/env"
+	"restaurant-browser/internal/database"
 
 	_ "github.com/lib/pq"
 )
@@ -17,20 +18,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func Start() {
+	ctx := context.Background()
+
 	envApp := env.GetEnv()
 
-	psqlInfo := fmt.Sprintf(
-		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		envApp.DB_HOST,
-		envApp.DB_PORT,
-		envApp.DB_USER,
-		envApp.DB_PASSWORD,
-		envApp.DB_NAME,
-	)
-	_, err := sql.Open("postgres", psqlInfo)
+	db := database.NewPostgresSQL(ctx, envApp)
+	err := db.ConnectDB()
 	if err != nil {
 		panic(err)
 	}
+	defer db.CloseDB()
 
 	fmt.Fprintf(os.Stdout, "Web Server started. Listening on 0.0.0.0:%s\n", envApp.SERVER_PORT)
 	http.HandleFunc("/", handler)
