@@ -29,6 +29,7 @@ func NewHttpServer(ctx context.Context, ec env.EnvApp, db database.Database) Ser
 	}
 
 	server.routes()
+	server.configureCors()
 
 	return server
 }
