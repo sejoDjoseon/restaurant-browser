@@ -54,3 +54,7 @@ func (p *PostgresSQL) CloseDB() {
 		_ = p.connection.Close()
 	}
 }
+
+func (p *PostgresSQL) GetConnection() *sql.DB {
+	return p.connection
+}
