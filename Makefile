@@ -7,6 +7,7 @@ HOST_PORT=9000
 POD_PORT=80
 
 # DB
+POSTGRES=postgresql
 POSTGRES_DB=dev
 POSTGRES_USER=live
 POSTGRES_PASSWORD=secretPassword
@@ -22,10 +23,12 @@ POD_PGADMIN_PORT=9001
 build:
 	podman build --tag $(BACKEND)\:$(VERSION) -f ./backend/Containerfile
 	podman build --tag $(FRONTEND)\:$(VERSION) -f ./frontend/Containerfile
+	podman build --tag $(POSTGRES)\:$(VERSION) -f ./db/Containerfile
 
 run:
 	podman build --tag $(BACKEND)\:$(VERSION) -f ./backend/Containerfile
 	podman build --tag $(FRONTEND)\:$(VERSION) -f ./frontend/Containerfile
+	podman build --tag $(POSTGRES)\:$(VERSION) -f ./db/Containerfile
 
 	if podman pod exists ${TAG}; then \
 		echo pod exists; \
@@ -44,10 +47,10 @@ run:
 	--name=pgadmin12                                          \
 	-dt dpage/pgadmin4
 
-	podman run --pod=${TAG} --name=db         \
+	podman run -dt --pod=${TAG} --name=db         \
 	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
 	-e POSTGRES_USER=${POSTGRES_USER}         \
-	-dt postgres\:latest
+	$(POSTGRES)
 
 	podman run -dt --pod=${TAG} --name=backend     \
 	-e PORT=${BACKEND_PORT}                        \
@@ -55,7 +58,7 @@ run:
 	-e DB_PORT=${POSTGRES_PORT}                    \
 	-e DB_USER=${POSTGRES_USER}                    \
 	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
-	-e DB_NAME=postgres                            \
+	-e DB_NAME=${POSTGRES_USER}                            \
 	$(BACKEND)
 
 	podman run -dt --pod=${TAG} --name=frontend    \
