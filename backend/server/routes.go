@@ -9,7 +9,8 @@ import (
 func (s *HttpServer) routes() {
 	rtsService := app_restaurant.NewRestaurantHTTPService(s.ctx, s.db.GetConnection())
 	r := mux.NewRouter()
-	r.HandleFunc("/restaurants", rtsService.Handler).Methods("GET")
+	r.HandleFunc("/restaurants", rtsService.RestaurantsListHandler).Methods("GET")
+	r.HandleFunc("/restaurants/{id}/catalog", rtsService.RestaurantCatalogHandler).Methods("GET")
 
 	s.svr.Handler = r
 }
