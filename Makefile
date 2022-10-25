@@ -88,7 +88,7 @@ rerun-f:
 
 	podman run -dt --pod=${TAG} --name=frontend    \
 	-e BACKEND_PORT=${BACKEND_PORT}                \
-	$(FRONTEND))
+	$(FRONTEND)
 
 
 #   Deletes pod if exists

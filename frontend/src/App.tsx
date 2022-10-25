@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
+import AppContext, { AppContextI } from 'AppContext'
 import Header from 'components/Header'
 import AppRouter from 'components/Router/AppRouter'
 import { BrowserRouter, Link } from 'react-router-dom'
-
+import { RestaurantHttpClient } from 'services/RestaurantHttpClient'
+import RestaurantsStore from 'stores/Restaurants/RestaurantsStore'
 import './App.css'
 
 function App() {
+  const appContext = useRef<AppContextI>({
+    _restaurantsStore: new RestaurantsStore(new RestaurantHttpClient()),
+  })
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -14,11 +20,13 @@ function App() {
           <div>
             <Link to="/">Restaurants</Link> | <Link to="/catalog">Catalog</Link>
           </div>
+          Restaurants Browser
         </Header>
-
-        <div className="App-header">
-          <AppRouter />
-        </div>
+        <AppContext.Provider value={appContext.current}>
+          <div className="container">
+            <AppRouter />
+          </div>
+        </AppContext.Provider>
       </div>
     </BrowserRouter>
   )

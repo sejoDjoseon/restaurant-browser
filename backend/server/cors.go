@@ -6,7 +6,7 @@ import (
 
 func (s *HttpServer) configureCors() {
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost", "http://localhost:9000"},
+		AllowedOrigins:   []string{"http://localhost", "http://localhost:9000", "http://localhost:3000"},
 		AllowCredentials: true,
 		// Enable Debugging for testing, consider disabling in production
 		Debug: true,
