@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 
 import AppContext, { AppContextI } from 'AppContext'
-import Header from 'components/Header'
+import Header from 'components/Header/Header'
 import AppRouter from 'components/Router/AppRouter'
 import { BrowserRouter, Link } from 'react-router-dom'
 import { RestaurantHttpClient } from 'services/RestaurantHttpClient'

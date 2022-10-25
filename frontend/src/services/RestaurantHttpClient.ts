@@ -1,4 +1,4 @@
-import HttpClient from 'libs/HttpClient/HttpClient'
+import HttpClient from 'libs/HttpClient'
 import { Restaurant, RestaurantResponse } from 'models/Restaurants'
 
 interface RestaurantHttpClientI {
