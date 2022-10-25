@@ -2,7 +2,7 @@ import React from 'react'
 
 import Cell from 'components/Cell/Cell'
 import { Restaurant } from 'models/Restaurants'
-import { redirect, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import RestaurantField from '../RestaurantField/RestaurantField'
 
