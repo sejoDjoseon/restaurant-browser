@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
-export default styled.div`
-  position: absolute;
+export const ScreenContainer = styled.div`
   display: flex;
-  height: 100%;
+`
+export const SectionContainer = styled.div<{ widthVW: number }>`
+  width: ${({ widthVW }) => widthVW}vw;
 `

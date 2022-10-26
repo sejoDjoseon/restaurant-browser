@@ -6,7 +6,13 @@ import { Restaurant } from 'models/Restaurants'
 
 import BrowserMap from './components/BrowserMap/BrowserMap'
 import RestaurantList from './components/RestaurantList/RestaurantList'
-import ScreenLayout from './components/ScreenLayout/ScreenLayout'
+import {
+  ScreenContainer,
+  SectionContainer,
+} from './components/ScreenLayout/ScreenLayout'
+
+const LEFT_SECTION_VW = 40
+const RIGHT_SECTION_VW = 60
 
 export default () => {
   const { _restaurantsStore } = useAppContext()!
@@ -26,17 +32,17 @@ export default () => {
   })
 
   return (
-    <ScreenLayout>
-      <div style={{ width: '40vw' }}>
+    <ScreenContainer>
+      <SectionContainer widthVW={LEFT_SECTION_VW}>
         <BrowserMap></BrowserMap>
-      </div>
-      <div style={{ width: '60vw' }}>
+      </SectionContainer>
+      <SectionContainer widthVW={RIGHT_SECTION_VW}>
         <div>
           <h2>Restaurants</h2>
         </div>
         {loaging && <h1>Loading</h1>}
         {restaurants && <RestaurantList restaurants={restaurants} />}
-      </div>
-    </ScreenLayout>
+      </SectionContainer>
+    </ScreenContainer>
   )
 }

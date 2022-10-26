@@ -7,4 +7,5 @@
 .container {
   background-color: #f6f5fa;
   flex-grow: 1;
+  display: flex;
 }
