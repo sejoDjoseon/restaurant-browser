@@ -1,4 +1,5 @@
 import { makeObservable, observable, action } from 'mobx'
+import { Coordinates } from 'models/Coordinates'
 import { Restaurant } from 'models/Restaurants'
 
 import { RestaurantsTransportLayerI } from './RestaurantsTransportLayer'
@@ -11,14 +12,18 @@ export default class RestaurantsStore {
     makeObservable(this)
   }
 
-  getRestaurants() {
-    this._transportLayer.getRestaurants().then((restaurants) => {
+  getRestaurants(location?: Coordinates) {
+    this._transportLayer.getRestaurants(location).then((restaurants) => {
       this.setRestaurants(restaurants)
     })
   }
 
+  cleanRestaurants() {
+    this.setRestaurants()
+  }
+
   @action
-  private setRestaurants(rest: Restaurant[]) {
+  private setRestaurants(rest?: Restaurant[]) {
     this.restaurants = rest
   }
 }

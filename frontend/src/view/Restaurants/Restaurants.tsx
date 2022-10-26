@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import { useAppContext } from 'AppContext'
 import { useAutorun } from 'hooks/useAutorun'
+import { Coordinates } from 'models/Coordinates'
 import { Restaurant } from 'models/Restaurants'
 
 import BrowserMap from './components/BrowserMap/BrowserMap'
@@ -31,10 +32,16 @@ export default () => {
     }
   })
 
+  const handleNewPosition = (position: Coordinates) => {
+    _restaurantsStore.cleanRestaurants()
+    setLoading(false)
+    _restaurantsStore.getRestaurants(position)
+  }
+
   return (
     <ScreenContainer>
       <SectionContainer widthVW={LEFT_SECTION_VW}>
-        <BrowserMap></BrowserMap>
+        <BrowserMap onNewPosition={handleNewPosition}></BrowserMap>
       </SectionContainer>
       <SectionContainer widthVW={RIGHT_SECTION_VW}>
         <div>

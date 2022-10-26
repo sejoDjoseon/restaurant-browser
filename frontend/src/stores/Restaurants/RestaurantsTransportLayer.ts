@@ -1,8 +1,9 @@
+import { Coordinates } from 'models/Coordinates'
 import { Restaurant } from 'models/Restaurants'
 import { RestaurantHttpClient } from 'services/RestaurantHttpClient'
 
 export interface RestaurantsTransportLayerI {
-  getRestaurants: () => Promise<Restaurant[]>
+  getRestaurants: (location?: Coordinates) => Promise<Restaurant[]>
 }
 
 export const newRestaurantsTransportLayer = (

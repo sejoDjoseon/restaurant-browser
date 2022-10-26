@@ -1,8 +1,9 @@
 import HttpClient from 'libs/HttpClient'
+import { Coordinates } from 'models/Coordinates'
 import { Restaurant, RestaurantResponse } from 'models/Restaurants'
 
 interface RestaurantHttpClientI {
-  getRestaurants: () => Promise<Restaurant[]>
+  getRestaurants: (location?: Coordinates) => Promise<Restaurant[]>
 }
 
 export class RestaurantHttpClient
@@ -13,9 +14,14 @@ export class RestaurantHttpClient
     super()
   }
 
-  getRestaurants = (): Promise<Restaurant[]> => {
+  getRestaurants = (location?: Coordinates): Promise<Restaurant[]> => {
+    let url = '/restaurants'
+    if (!!location) {
+      url = `${url}?latitude=${location.lat}&longitude=${location.lng}`
+    }
+
     return this.axiosInstance
-      .get<unknown, RestaurantResponse[]>('/restaurants')
+      .get<unknown, RestaurantResponse[]>(url)
       .then((restaurants): Restaurant[] => restaurants)
       .catch((error) => error)
   }
