@@ -7,10 +7,13 @@ import { BrowserRouter } from 'react-router-dom'
 import { RestaurantHttpClient } from 'services/RestaurantHttpClient'
 import RestaurantsStore from 'stores/Restaurants/RestaurantsStore'
 import './App.css'
+import { newRestaurantsTransportLayer } from 'stores/Restaurants/RestaurantsTransportLayer'
 
 function App() {
   const appContext = useRef<AppContextI>({
-    _restaurantsStore: new RestaurantsStore(new RestaurantHttpClient()),
+    _restaurantsStore: new RestaurantsStore(
+      newRestaurantsTransportLayer(new RestaurantHttpClient()),
+    ),
   })
 
   return (
