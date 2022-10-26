@@ -1,17 +1,18 @@
 import { makeObservable, observable, action } from 'mobx'
 import { Restaurant } from 'models/Restaurants'
-import { RestaurantHttpClient } from 'services/RestaurantHttpClient'
+
+import { RestaurantsTransportLayerI } from './RestaurantsTransportLayer'
 
 export default class RestaurantsStore {
   @observable
   restaurants?: Restaurant[]
 
-  constructor(private readonly restaurantHttpClient: RestaurantHttpClient) {
+  constructor(private readonly _transportLayer: RestaurantsTransportLayerI) {
     makeObservable(this)
   }
 
   getRestaurants() {
-    this.restaurantHttpClient.getRestaurants().then((restaurants) => {
+    this._transportLayer.getRestaurants().then((restaurants) => {
       this.setRestaurants(restaurants)
     })
   }
