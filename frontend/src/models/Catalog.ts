@@ -1,5 +1,13 @@
 import { MoneyValue } from './Money'
 
+export interface ProductResponse {
+  id: string
+  name: string
+  description: string
+  image: string
+  price: MoneyValue
+}
+
 export interface Product {
   id: string
   name: string
@@ -8,8 +16,13 @@ export interface Product {
   price: MoneyValue
 }
 
-export interface Category {
+export interface CategoryResponse {
   category: string
+  products: Product[]
+}
+
+export interface Category {
+  categoryName: string
   products: Product[]
 }
 

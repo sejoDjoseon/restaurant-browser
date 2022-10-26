@@ -1,5 +1,5 @@
 import HttpClient from 'libs/HttpClient'
-import { Catalog } from 'models/Catalog'
+import { Catalog, Category, CategoryResponse } from 'models/Catalog'
 
 interface CatalogHttpClientI {
   getCatalog: (restaurantID: string) => Promise<Catalog>
@@ -15,7 +15,13 @@ export default class CatalogHttpClient
 
   getCatalog = (restaurantID: string): Promise<Catalog> => {
     return this.axiosInstance
-      .get<unknown, Catalog>(`/restaurants/${restaurantID}/catalog`)
+      .get<unknown, CategoryResponse[]>(`/restaurants/${restaurantID}/catalog`)
+      .then((categories) => {
+        return categories.map<Category>((category) => ({
+          categoryName: category.category,
+          products: category.products,
+        }))
+      })
       .catch((error) => error)
   }
 }

@@ -1,11 +1,10 @@
+import Container from 'components/Container/Container'
 import styled from 'styled-components'
 
-export default styled.div`
+export default styled(Container)`
   width: 200px;
-  height: 150px;
+  height: 300px;
   margin-top: 10px;
-  line-height: 150px;
-  color: white;
   display: flex;
   flex-direction: column;
 `

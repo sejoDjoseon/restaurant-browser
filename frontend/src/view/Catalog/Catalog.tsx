@@ -7,6 +7,7 @@ import {
   CatalogTransportLayerI,
   newCatalogTransportLayer,
 } from './CatalogTransportLayer'
+import Category from './components/Category/Category'
 import CatalogHttpClient from './services/CatalogHttpClient'
 
 export default () => {
@@ -28,10 +29,13 @@ export default () => {
   }, [id, transportLayer])
 
   return (
-    <div>
+    <>
       <h2>Catalog</h2>
       {loading && <h3>Loading</h3>}
-      {!!catalog && <p>{JSON.stringify(catalog)}</p>}
-    </div>
+      {!!catalog &&
+        catalog.map((category, index) => (
+          <Category key={index} category={category} />
+        ))}
+    </>
   )
 }
