@@ -6,8 +6,8 @@ import AppRouter from 'components/Router/AppRouter'
 import { BrowserRouter } from 'react-router-dom'
 import { RestaurantHttpClient } from 'services/RestaurantHttpClient'
 import RestaurantsStore from 'stores/Restaurants/RestaurantsStore'
-import './App.css'
 import { newRestaurantsTransportLayer } from 'stores/Restaurants/RestaurantsTransportLayer'
+import './App.css'
 
 function App() {
   const appContext = useRef<AppContextI>({
