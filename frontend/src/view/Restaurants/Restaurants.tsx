@@ -4,7 +4,9 @@ import { useAppContext } from 'AppContext'
 import { useAutorun } from 'hooks/useAutorun'
 import { Restaurant } from 'models/Restaurants'
 
+import BrowserMap from './components/BrowserMap/BrowserMap'
 import RestaurantList from './components/RestaurantList/RestaurantList'
+import ScreenLayout from './components/ScreenLayout/ScreenLayout'
 
 export default () => {
   const { _restaurantsStore } = useAppContext()!
@@ -24,12 +26,17 @@ export default () => {
   })
 
   return (
-    <React.Fragment>
-      <div>
-        <h2>Restaurants</h2>
+    <ScreenLayout>
+      <div style={{ width: '40vw' }}>
+        <BrowserMap></BrowserMap>
       </div>
-      {loaging && <h1>Loading</h1>}
-      {restaurants && <RestaurantList restaurants={restaurants} />}
-    </React.Fragment>
+      <div style={{ width: '60vw' }}>
+        <div>
+          <h2>Restaurants</h2>
+        </div>
+        {loaging && <h1>Loading</h1>}
+        {restaurants && <RestaurantList restaurants={restaurants} />}
+      </div>
+    </ScreenLayout>
   )
 }
