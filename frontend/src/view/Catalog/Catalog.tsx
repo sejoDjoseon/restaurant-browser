@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+import { useAppContext } from 'AppContext'
 import { Catalog } from 'models/Catalog'
 import { useParams } from 'react-router-dom'
 
@@ -8,10 +9,12 @@ import {
   newCatalogTransportLayer,
 } from './CatalogTransportLayer'
 import Category from './components/Category/Category'
+import CategoryContainer from './components/CategoryContainer/CategoryContainer'
 import CatalogHttpClient from './services/CatalogHttpClient'
 
 export default () => {
   const { id } = useParams()
+  const { _restaurantsStore } = useAppContext()!
 
   const transportLayer = useRef<CatalogTransportLayerI>(
     newCatalogTransportLayer(new CatalogHttpClient()),
@@ -34,7 +37,9 @@ export default () => {
       {loading && <h3>Loading</h3>}
       {!!catalog &&
         catalog.map((category, index) => (
-          <Category key={index} category={category} />
+          <CategoryContainer key={index}>
+            <Category category={category} />
+          </CategoryContainer>
         ))}
     </>
   )

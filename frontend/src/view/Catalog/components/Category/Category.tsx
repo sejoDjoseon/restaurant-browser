@@ -3,6 +3,7 @@ import React from 'react'
 import { Category } from 'models/Catalog'
 
 import Product from '../Product/Product'
+import ProductsContainer from '../ProductsContainer/ProductsContainer'
 
 interface CategoryProps {
   category: Category
@@ -11,10 +12,12 @@ interface CategoryProps {
 export default ({ category }: CategoryProps) => {
   return (
     <>
-      <h4>{category.categoryName}</h4>
-      {category.products.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
+      <h2>{category.categoryName}</h2>
+      <ProductsContainer>
+        {category.products.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </ProductsContainer>
     </>
   )
 }
