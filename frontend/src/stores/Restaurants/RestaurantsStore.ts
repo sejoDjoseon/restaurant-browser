@@ -1,4 +1,5 @@
 import { makeObservable, observable, action } from 'mobx'
+import { AppError } from 'models/AppError'
 import { Coordinates } from 'models/Coordinates'
 import { Restaurant } from 'models/Restaurants'
 
@@ -13,13 +14,33 @@ export default class RestaurantsStore {
   }
 
   getRestaurants(location?: Coordinates) {
-    this._transportLayer.getRestaurants(location).then((restaurants) => {
-      this.setRestaurants(restaurants)
-    })
+    this.fetchRestaurants(location)
   }
 
   cleanRestaurants() {
     this.setRestaurants()
+  }
+
+  getRestaurant(rstID: string): Promise<Restaurant> {
+    return new Promise<Restaurant>(async (resolve, reject) => {
+      let restaurant: Restaurant | undefined
+      if (!!this.restaurants) {
+        restaurant = this.restaurants.find((val) => val.id === rstID)
+      } else {
+        const restaurants = await this.fetchRestaurants()
+
+        restaurant = restaurants.find((val) => val.id === rstID)
+      }
+      if (!!restaurant) resolve(restaurant)
+      reject(new AppError('restaurant not found'))
+    })
+  }
+
+  private fetchRestaurants(location?: Coordinates): Promise<Restaurant[]> {
+    return this._transportLayer.getRestaurants(location).then((restaurants) => {
+      this.setRestaurants(restaurants)
+      return restaurants
+    })
   }
 
   @action

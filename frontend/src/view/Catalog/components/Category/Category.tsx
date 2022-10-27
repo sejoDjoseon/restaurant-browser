@@ -3,7 +3,7 @@ import React from 'react'
 import { Category } from 'models/Catalog'
 
 import Product from '../Product/Product'
-import ProductsContainer from '../ProductsContainer/ProductsContainer'
+import { ProductsContainer } from '../ScreenLayout/ScreenLayout'
 
 interface CategoryProps {
   category: Category

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useAppContext } from 'AppContext'
+import NoContent from 'components/NoContent/NoContent'
 import Title from 'components/Title/Title'
 import { useAutorun } from 'hooks/useAutorun'
 import { Coordinates } from 'models/Coordinates'
@@ -46,7 +47,11 @@ export default () => {
       </SectionContainer>
       <SectionContainer widthVW={RIGHT_SECTION_VW} style={{ overflow: 'auto' }}>
         <Title>Restaurants</Title>
-        {loaging && <h1>Loading</h1>}
+        {loaging && (
+          <NoContent>
+            <h1>Loading</h1>
+          </NoContent>
+        )}
         {restaurants && <RestaurantList restaurants={restaurants} />}
       </SectionContainer>
     </ScreenContainer>
