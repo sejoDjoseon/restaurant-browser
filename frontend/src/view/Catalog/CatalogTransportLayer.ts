@@ -3,7 +3,7 @@ import { Catalog } from 'models/Catalog'
 import CatalogHttpClient from './services/CatalogHttpClient'
 
 export interface CatalogTransportLayerI {
-  getCatalog: (restaurantID: string) => Promise<Catalog>
+  getCatalog: (restaurantID: string, filter?: string) => Promise<Catalog>
 }
 
 export const newCatalogTransportLayer = (

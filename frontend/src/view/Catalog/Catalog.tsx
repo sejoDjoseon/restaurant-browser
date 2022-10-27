@@ -10,6 +10,7 @@ import {
 } from './CatalogTransportLayer'
 import Category from './components/Category/Category'
 import CategoryContainer from './components/CategoryContainer/CategoryContainer'
+import SearchInput from './components/SearchInput/SearchInput'
 import CatalogHttpClient from './services/CatalogHttpClient'
 
 export default () => {
@@ -23,17 +24,25 @@ export default () => {
   const [loading, setLoading] = useState(true)
   const [catalog, setCatalog] = useState<Catalog | undefined>(undefined)
 
+  const handleCatalogResponse = (newCatalog: Catalog) => {
+    setLoading(false)
+    setCatalog(newCatalog)
+  }
+
   useEffect(() => {
-    !!id &&
-      transportLayer.getCatalog(id).then((response) => {
-        setLoading(false)
-        setCatalog(response)
-      })
+    !!id && transportLayer.getCatalog(id).then(handleCatalogResponse)
   }, [id, transportLayer])
 
+  const handleSearch = (value: string) => {
+    setCatalog(undefined)
+    setLoading(true)
+    !!id && transportLayer.getCatalog(id, value).then(handleCatalogResponse)
+  }
+
   return (
-    <>
+    <div>
       <h2>Catalog</h2>
+      <SearchInput onSubmit={handleSearch} />
       {loading && <h3>Loading</h3>}
       {!!catalog &&
         catalog.map((category, index) => (
@@ -41,6 +50,7 @@ export default () => {
             <Category category={category} />
           </CategoryContainer>
         ))}
-    </>
+      {catalog?.length === 0 && <h3>We can't find reasults for your search</h3>}
+    </div>
   )
 }
