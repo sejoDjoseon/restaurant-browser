@@ -78,6 +78,7 @@ rerun-b:
 	-e DB_USER=${POSTGRES_USER}                    \
 	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
 	-e DB_NAME=postgres                            \
+	-e DB_NAME=${POSTGRES_USER}                    \
 	$(BACKEND)
 
 
