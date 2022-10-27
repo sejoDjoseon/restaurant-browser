@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 
 import { useAppContext } from 'AppContext'
+import Title from 'components/Title/Title'
 import { Catalog } from 'models/Catalog'
 import { useParams } from 'react-router-dom'
 
@@ -42,7 +43,7 @@ export default () => {
 
   return (
     <ScreenLayout>
-      <h2>Catalog</h2>
+      <Title>Catalog</Title>
       <SearchInput onSubmit={handleSearch} />
       {loading && <h3>Loading</h3>}
       {!!catalog &&

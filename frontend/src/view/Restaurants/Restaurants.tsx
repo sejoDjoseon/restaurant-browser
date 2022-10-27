@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import { useAppContext } from 'AppContext'
+import Title from 'components/Title/Title'
 import { useAutorun } from 'hooks/useAutorun'
 import { Coordinates } from 'models/Coordinates'
 import { Restaurant } from 'models/Restaurants'
@@ -44,9 +45,7 @@ export default () => {
         <BrowserMap onNewPosition={handleNewPosition}></BrowserMap>
       </SectionContainer>
       <SectionContainer widthVW={RIGHT_SECTION_VW} style={{ overflow: 'auto' }}>
-        <div>
-          <h1>Restaurants</h1>
-        </div>
+        <Title>Restaurants</Title>
         {loaging && <h1>Loading</h1>}
         {restaurants && <RestaurantList restaurants={restaurants} />}
       </SectionContainer>
