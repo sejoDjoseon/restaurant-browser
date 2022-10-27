@@ -10,6 +10,7 @@ import {
 } from './CatalogTransportLayer'
 import Category from './components/Category/Category'
 import CategoryContainer from './components/CategoryContainer/CategoryContainer'
+import ScreenLayout from './components/ScreenLayout/ScreenLayout'
 import SearchInput from './components/SearchInput/SearchInput'
 import CatalogHttpClient from './services/CatalogHttpClient'
 
@@ -40,7 +41,7 @@ export default () => {
   }
 
   return (
-    <div>
+    <ScreenLayout>
       <h2>Catalog</h2>
       <SearchInput onSubmit={handleSearch} />
       {loading && <h3>Loading</h3>}
@@ -51,6 +52,6 @@ export default () => {
           </CategoryContainer>
         ))}
       {catalog?.length === 0 && <h3>We can't find reasults for your search</h3>}
-    </div>
+    </ScreenLayout>
   )
 }

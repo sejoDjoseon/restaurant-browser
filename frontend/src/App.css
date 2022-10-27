@@ -1,11 +1,12 @@
 .App {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }
 
 .container {
   background-color: #f6f5fa;
-  flex-grow: 1;
+  position: fixed;
   display: flex;
+  padding-top: 8vh;
+  height: 92vh;
+  width: 100%;
 }

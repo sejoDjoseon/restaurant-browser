@@ -43,7 +43,7 @@ export default () => {
       <SectionContainer widthVW={LEFT_SECTION_VW}>
         <BrowserMap onNewPosition={handleNewPosition}></BrowserMap>
       </SectionContainer>
-      <SectionContainer widthVW={RIGHT_SECTION_VW}>
+      <SectionContainer widthVW={RIGHT_SECTION_VW} style={{ overflow: 'auto' }}>
         <div>
           <h2>Restaurants</h2>
         </div>
