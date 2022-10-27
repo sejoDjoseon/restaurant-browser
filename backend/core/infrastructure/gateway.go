@@ -42,7 +42,7 @@ func (l *RestaurantLogic) RestaurantCatalog(rstID string, filter *string) (entit
 	}
 
 	if filter != nil {
-		products.FilterProducts(rstDBProducts, *filter)
+		rstDBProducts = products.FilterProducts(rstDBProducts, *filter)
 	}
 
 	// create categories
