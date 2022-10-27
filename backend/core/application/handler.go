@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"net/http"
 	restaurant "restaurant-browser/core/infrastructure"
+	"restaurant-browser/internal/coordinates"
 
 	"github.com/gorilla/mux"
 )
@@ -19,7 +20,18 @@ func NewRestaurantHTTPService(ctx context.Context, db *sql.DB) *RestaurantHTTPSe
 }
 
 func (s *RestaurantHTTPService) RestaurantsListHandler(w http.ResponseWriter, r *http.Request) {
-	rts, err := s.gtw.ListRestaurants()
+	query := r.URL.Query()
+	var location *coordinates.Point
+	if query.Has("latitude") && query.Has("longitude") {
+		point, err := coordinates.PointFromStrings(query.Get("latitude"), query.Get("longitude"))
+		if err != nil {
+			respondWithError(w, http.StatusBadRequest, err.Error())
+			return
+		}
+		location = &point
+	}
+
+	rts, err := s.gtw.ListRestaurants(location)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return

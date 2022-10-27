@@ -4,11 +4,13 @@ import (
 	"context"
 	"database/sql"
 	"restaurant-browser/core/entities"
+	"restaurant-browser/internal/coordinates"
 	"restaurant-browser/internal/products"
+	"restaurant-browser/internal/restaurant_utils"
 )
 
 type RestaurantGateway interface {
-	ListRestaurants() ([]entities.Restaurant, error)
+	ListRestaurants(location *coordinates.Point) ([]entities.Restaurant, error)
 	RestaurantCatalog(rstID string) (entities.Catalog, error)
 }
 
@@ -20,8 +22,17 @@ func NewRestaurnatGateway(ctx context.Context, db *sql.DB) RestaurantGateway {
 	return &RestaurantLogic{St: NewRestaurantStorage(ctx, db)}
 }
 
-func (l *RestaurantLogic) ListRestaurants() ([]entities.Restaurant, error) {
-	return l.St.listRestaurantsInDB()
+func (l *RestaurantLogic) ListRestaurants(location *coordinates.Point) ([]entities.Restaurant, error) {
+	restaurants, err := l.St.listRestaurantsInDB()
+	if err != nil {
+		return restaurants, err
+	}
+
+	if location != nil {
+		restaurants = restaurant_utils.SortByDistance(restaurants, *location)
+	}
+
+	return restaurants, nil
 }
 
 func (l *RestaurantLogic) RestaurantCatalog(rstID string) (entities.Catalog, error) {
