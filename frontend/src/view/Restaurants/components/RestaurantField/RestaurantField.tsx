@@ -1,7 +1,10 @@
 import { Restaurant } from 'models/Restaurants'
 
-import FieldContent from '../FieldContent/FieldContent'
-import RestaurantImg from '../RestaurantImg/RestaurantImg'
+import {
+  RestaurantName,
+  RestaurantImg,
+  OpenStatusContainer,
+} from './FieldLayout'
 
 interface RestaurantFieldProps {
   restaurant: Restaurant
@@ -10,8 +13,11 @@ interface RestaurantFieldProps {
 export default ({ restaurant }: RestaurantFieldProps) => (
   <>
     <RestaurantImg src={`https://${restaurant.image}`} alt="restaurant-pic" />
-    <FieldContent>
+    <RestaurantName>
       <h3>{restaurant.name}</h3>
-    </FieldContent>
+    </RestaurantName>
+    <OpenStatusContainer>
+      {restaurant.open ? 'Open' : 'Closed'}
+    </OpenStatusContainer>
   </>
 )

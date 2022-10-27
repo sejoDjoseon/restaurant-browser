@@ -10,6 +10,7 @@ type Restaurant struct {
 	Name     string            `json:"name"`
 	Image    string            `json:"image,omitempty"`
 	Location coordinates.Point `json:"location"`
+	Open     bool              `json:"open"`
 }
 
 type DBProduct struct {

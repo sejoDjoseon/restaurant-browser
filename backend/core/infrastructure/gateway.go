@@ -15,11 +15,12 @@ type RestaurantGateway interface {
 }
 
 type RestaurantLogic struct {
-	St RestaurantStorage
+	St        RestaurantStorage
+	ScheduleS ScheduleService
 }
 
 func NewRestaurnatGateway(ctx context.Context, db *sql.DB) RestaurantGateway {
-	return &RestaurantLogic{St: NewRestaurantStorage(ctx, db)}
+	return &RestaurantLogic{St: NewRestaurantStorage(ctx, db), ScheduleS: NewScheduleService()}
 }
 
 func (l *RestaurantLogic) ListRestaurants(location *coordinates.Point) ([]entities.Restaurant, error) {
@@ -30,6 +31,10 @@ func (l *RestaurantLogic) ListRestaurants(location *coordinates.Point) ([]entiti
 
 	if location != nil {
 		restaurants = restaurant_utils.SortByDistance(restaurants, *location)
+	}
+
+	for i := range restaurants {
+		restaurants[i].Open = l.ScheduleS.isOpen(restaurants[i].ID)
 	}
 
 	return restaurants, nil

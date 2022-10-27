@@ -5,6 +5,7 @@ export interface RestaurantResponse {
   name: string
   image: string
   location: Coordinates
+  open: boolean
 }
 
 export interface Restaurant {
@@ -12,4 +13,5 @@ export interface Restaurant {
   name: string
   image: string
   location: Coordinates
+  open: boolean
 }
