@@ -110,6 +110,7 @@ var testCases []SortByDistanceTestCase = []SortByDistanceTestCase{
 }
 
 func TestCategoriesFromDBProducts(t *testing.T) {
+	t.Parallel()
 	for _, testCase := range testCases {
 		assert.ElementsMatch(t, testCase.Result, SortByDistance(testCase.Restaurants, testCase.Point))
 	}

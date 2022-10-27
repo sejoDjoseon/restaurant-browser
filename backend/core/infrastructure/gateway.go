@@ -11,7 +11,7 @@ import (
 
 type RestaurantGateway interface {
 	ListRestaurants(location *coordinates.Point) ([]entities.Restaurant, error)
-	RestaurantCatalog(rstID string) (entities.Catalog, error)
+	RestaurantCatalog(rstID string, filter *string) (entities.Catalog, error)
 }
 
 type RestaurantLogic struct {
@@ -35,10 +35,14 @@ func (l *RestaurantLogic) ListRestaurants(location *coordinates.Point) ([]entiti
 	return restaurants, nil
 }
 
-func (l *RestaurantLogic) RestaurantCatalog(rstID string) (entities.Catalog, error) {
+func (l *RestaurantLogic) RestaurantCatalog(rstID string, filter *string) (entities.Catalog, error) {
 	rstDBProducts, err := l.St.listRestaurantProductsInDB(rstID)
 	if err != nil {
 		return nil, err
+	}
+
+	if filter != nil {
+		products.FilterProducts(rstDBProducts, *filter)
 	}
 
 	// create categories

@@ -43,7 +43,14 @@ func (s *RestaurantHTTPService) RestaurantsListHandler(w http.ResponseWriter, r 
 func (s *RestaurantHTTPService) RestaurantCatalogHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	catalog, err := s.gtw.RestaurantCatalog(id)
+
+	var filter string
+	query := r.URL.Query()
+	if query.Has("query") {
+		filter = query.Get("query")
+	}
+
+	catalog, err := s.gtw.RestaurantCatalog(id, &filter)
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return

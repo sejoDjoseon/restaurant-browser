@@ -81,16 +81,16 @@ func (p *PostgresSQL) connect() (*sql.DB, error) {
 func try(err error, db *sql.DB, counts *int) error {
 	if err != nil {
 		// increase counter
-		fmt.Fprintf(os.Stdout, "Trying to connect with database: %s", err.Error())
+		fmt.Fprintf(os.Stdout, "Trying to connect with database: %s\n", err.Error())
 		*counts++
 
 		// can't connect with the database
 		if *counts > DB_CONNECTION_TIMEOUT {
-			fmt.Fprintf(os.Stdout, "Can't connect with the database: %s", err.Error())
+			fmt.Fprintf(os.Stdout, "Can't connect with the database: %s\n", err.Error())
 		}
 
 		// log and try again
-		fmt.Fprintf(os.Stdout, "Backing off for a second: %s", err.Error())
+		fmt.Fprintf(os.Stdout, "Backing off for a second: %s\n", err.Error())
 		time.Sleep(time.Second)
 	}
 
