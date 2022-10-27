@@ -5,7 +5,16 @@ export const ScreenContainer = styled.div`
   overflow: auto;
 `
 export const ProductsContainer = styled.div`
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
+`
+
+export const ProductsGrid = styled.div`
+  width: 100%;
+  max-width: 1600px;
   display: flex;
   gap: 30px 30px;
   flex-wrap: wrap;
