@@ -45,7 +45,7 @@ export default () => {
       </SectionContainer>
       <SectionContainer widthVW={RIGHT_SECTION_VW} style={{ overflow: 'auto' }}>
         <div>
-          <h2>Restaurants</h2>
+          <h1>Restaurants</h1>
         </div>
         {loaging && <h1>Loading</h1>}
         {restaurants && <RestaurantList restaurants={restaurants} />}

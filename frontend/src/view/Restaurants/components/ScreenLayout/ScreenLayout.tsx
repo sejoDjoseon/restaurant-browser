@@ -6,3 +6,9 @@ export const ScreenContainer = styled.div`
 export const SectionContainer = styled.div<{ widthVW: number }>`
   width: ${({ widthVW }) => widthVW}vw;
 `
+export const ItemList = styled.div`
+  display flex;
+  flex-direction: column;
+  padding: 30px;
+  align-items: center;
+`
