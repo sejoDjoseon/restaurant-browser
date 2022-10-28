@@ -260,6 +260,25 @@ var FilterProductTestCases = []FilterProductsTestCase{
 		ListProducts: []entities.Product{
 			{
 				ID:          "111111",
+				Category:    "category",
+				Name:        "name",
+				Description: "description",
+			},
+		},
+		Filter: "category",
+		Result: []entities.Product{
+			{
+				ID:          "111111",
+				Category:    "category",
+				Name:        "name",
+				Description: "description",
+			},
+		},
+	},
+	{
+		ListProducts: []entities.Product{
+			{
+				ID:          "111111",
 				Category:    "1",
 				Name:        "name",
 				Description: "descripción",
@@ -296,9 +315,15 @@ var FilterProductTestCases = []FilterProductsTestCase{
 				Description: "con polvorones",
 			},
 			{
-				ID:          "3",
-				Category:    "3",
+				ID:          "4",
+				Category:    "polvorones",
 				Name:        "POLVORON DE ALMENDRA",
+				Description: "",
+			},
+			{
+				ID:          "5",
+				Category:    "polvorones",
+				Name:        "Mantecado",
 				Description: "",
 			},
 		},
@@ -317,9 +342,15 @@ var FilterProductTestCases = []FilterProductsTestCase{
 				Description: "con polvorones",
 			},
 			{
-				ID:          "3",
-				Category:    "3",
+				ID:          "4",
+				Category:    "polvorones",
 				Name:        "POLVORON DE ALMENDRA",
+				Description: "",
+			},
+			{
+				ID:          "5",
+				Category:    "polvorones",
+				Name:        "Mantecado",
 				Description: "",
 			},
 		},

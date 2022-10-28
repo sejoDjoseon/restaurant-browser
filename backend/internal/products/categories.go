@@ -82,6 +82,11 @@ func matchProduct(pr entities.Product, filter string) bool {
 		fmt.Fprintf(os.Stdout, "Wrong product if: %s\nError: %s\n", pr.ID, err.Error())
 		return false
 	}
+	sCategory, err := sanitize(pr.Category)
+	if err != nil {
+		fmt.Fprintf(os.Stdout, "Wrong product if: %s\nError: %s\n", pr.ID, err.Error())
+		return false
+	}
 
-	return strings.Contains(sName, filter) || strings.Contains(sDescription, filter)
+	return strings.Contains(sName, filter) || strings.Contains(sDescription, filter) || strings.Contains(sCategory, filter)
 }
