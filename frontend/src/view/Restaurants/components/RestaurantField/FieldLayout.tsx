@@ -7,8 +7,18 @@ export const RestaurantName = styled.div`
   align-items: center;
 `
 
+export const ImageConainer = styled.div`
+  width: 200px;
+  height: 100px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 export const RestaurantImg = styled.img`
   width: 150px;
+  height: auto;
 `
 
 export const OpenStatusContainer = styled.div`

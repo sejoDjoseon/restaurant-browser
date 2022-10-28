@@ -4,7 +4,7 @@ import colors from 'theme/colors'
 
 export default styled(Container)`
   width: 100%;
-  min-height: 80px;
+  height: 100px;
   display: flex;
   &:hover {
     background-color: ${colors.adminBlue}20;

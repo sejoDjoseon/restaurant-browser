@@ -92,6 +92,17 @@ rerun-f:
 	$(FRONTEND)
 
 
+rerun-db:
+	podman build --tag $(POSTGRES)\:$(VERSION) -f ./db/Containerfile
+
+	podman stop db && podman rm -f db
+
+	podman run -dt --pod=${TAG} --name=db         \
+	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
+	-e POSTGRES_USER=${POSTGRES_USER}         \
+	$(POSTGRES)
+
+
 #   Deletes pod if exists
 clean:
 	podman pod rm -f ${TAG} || true

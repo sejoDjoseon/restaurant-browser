@@ -4,6 +4,7 @@ import {
   RestaurantName,
   RestaurantImg,
   OpenStatusContainer,
+  ImageConainer,
 } from './FieldLayout'
 
 interface RestaurantFieldProps {
@@ -12,7 +13,9 @@ interface RestaurantFieldProps {
 
 export default ({ restaurant }: RestaurantFieldProps) => (
   <>
-    <RestaurantImg src={`https://${restaurant.image}`} alt="restaurant-pic" />
+    <ImageConainer>
+      <RestaurantImg src={`https://${restaurant.image}`} alt="restaurant-pic" />
+    </ImageConainer>
     <RestaurantName>
       <h3>{restaurant.name}</h3>
     </RestaurantName>
