@@ -7,11 +7,13 @@ import (
 	"os"
 	"restaurant-browser/core/entities"
 	"restaurant-browser/internal/coordinates"
+	"restaurant-browser/internal/money"
+	"restaurant-browser/internal/sqlmodels"
 )
 
 type RestaurantStorage interface {
-	listRestaurantsInDB() ([]entities.Restaurant, error)
-	listRestaurantProductsInDB(restID string) ([]entities.DBProduct, error)
+	listRestaurants() ([]entities.Restaurant, error)
+	listRestaurantProducts(restID string) ([]entities.Product, error)
 }
 
 type RestaurantService struct {
@@ -23,7 +25,7 @@ func NewRestaurantStorage(ctx context.Context, db *sql.DB) RestaurantStorage {
 	return &RestaurantService{ctx: ctx, db: db}
 }
 
-func (s *RestaurantService) listRestaurantsInDB() ([]entities.Restaurant, error) {
+func (s *RestaurantService) listRestaurants() ([]entities.Restaurant, error) {
 	querystring := `SELECT id, _name, _image, _location FROM t_restaurant`
 	rows, err := s.db.QueryContext(s.ctx, querystring)
 	if err != nil {
@@ -50,7 +52,20 @@ func (s *RestaurantService) listRestaurantsInDB() ([]entities.Restaurant, error)
 	return restaurants, nil
 }
 
-func (s *RestaurantService) listRestaurantProductsInDB(restID string) ([]entities.DBProduct, error) {
+func parseDBProduct(prDB sqlmodels.DBProduct) entities.Product {
+	return entities.Product{
+		ID:          prDB.ID,
+		Name:        prDB.Name,
+		Description: prDB.Description,
+		Image:       prDB.Image,
+		Price: money.Value{
+			Amount:   prDB.PriceValue,
+			Currency: money.Currency(prDB.PriceCurrency),
+		},
+	}
+}
+
+func (s *RestaurantService) listRestaurantProducts(restID string) ([]entities.Product, error) {
 	querystring := fmt.Sprintf(`SELECT id,
 		restaurant_id,
 		_category,
@@ -68,9 +83,9 @@ func (s *RestaurantService) listRestaurantProductsInDB(restID string) ([]entitie
 	}
 	defer rows.Close()
 
-	var products []entities.DBProduct
+	var products []entities.Product
 	for rows.Next() {
-		var pr entities.DBProduct
+		var pr sqlmodels.DBProduct
 		err = rows.Scan(
 			&pr.ID,
 			&pr.RestaurantID,
@@ -84,7 +99,7 @@ func (s *RestaurantService) listRestaurantProductsInDB(restID string) ([]entitie
 		if err != nil {
 			return nil, err
 		}
-		products = append(products, pr)
+		products = append(products, parseDBProduct(pr))
 	}
 
 	return products, nil

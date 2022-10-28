@@ -4,39 +4,35 @@ import (
 	"fmt"
 	"os"
 	"restaurant-browser/core/entities"
-	"restaurant-browser/internal/money"
 	"restaurant-browser/internal/string_utils"
 	"strings"
 )
 
-func parseDBProduct(prDB entities.DBProduct) entities.Product {
-	return entities.Product{
-		ID:          prDB.ID,
-		Name:        prDB.Name,
-		Description: prDB.Description,
-		Image:       prDB.Image,
-		Price: money.Value{
-			Amount:   prDB.PriceValue,
-			Currency: money.Currency(prDB.PriceCurrency),
-		},
+func productToCategoryProduct(pr entities.Product) entities.CategoryProduct {
+	return entities.CategoryProduct{
+		ID:          pr.ID,
+		Name:        pr.Name,
+		Description: pr.Description,
+		Image:       pr.Image,
+		Price:       pr.Price,
 	}
 }
 
-func CategoriesFromDBProducts(DBproducts []entities.DBProduct) []entities.Category {
+func CategoriesFromProducts(products []entities.Product) []entities.Category {
 	categories := make(map[string]entities.Category)
-	for _, prDB := range DBproducts {
-		category, ok := categories[prDB.Category]
+	for _, pr := range products {
+		category, ok := categories[pr.Category]
 		if !ok {
-			categories[prDB.Category] = entities.Category{
-				Category: prDB.Category,
-				Products: []entities.Product{
-					parseDBProduct(prDB),
+			categories[pr.Category] = entities.Category{
+				Category: pr.Category,
+				Products: []entities.CategoryProduct{
+					productToCategoryProduct(pr),
 				},
 			}
 			continue
 		}
-		category.Products = append(category.Products, parseDBProduct(prDB))
-		categories[prDB.Category] = category
+		category.Products = append(category.Products, productToCategoryProduct(pr))
+		categories[pr.Category] = category
 	}
 
 	result := []entities.Category{}
@@ -47,7 +43,7 @@ func CategoriesFromDBProducts(DBproducts []entities.DBProduct) []entities.Catego
 	return result
 }
 
-func FilterProducts(products []entities.DBProduct, filter string) []entities.DBProduct {
+func FilterProducts(products []entities.Product, filter string) []entities.Product {
 	if filter == "" {
 		return products
 	}
@@ -56,7 +52,7 @@ func FilterProducts(products []entities.DBProduct, filter string) []entities.DBP
 		return products
 	}
 
-	filteredProducts := []entities.DBProduct{}
+	filteredProducts := []entities.Product{}
 	for _, pr := range products {
 		if matchProduct(pr, sanitizedFilter) {
 			filteredProducts = append(filteredProducts, pr)
@@ -75,7 +71,7 @@ func sanitize(filter string) (string, error) {
 	return strings.ToLower(s), nil
 }
 
-func matchProduct(pr entities.DBProduct, filter string) bool {
+func matchProduct(pr entities.Product, filter string) bool {
 	sName, err := sanitize(pr.Name)
 	if err != nil {
 		fmt.Fprintf(os.Stdout, "Wrong product if: %s\nError: %s\n", pr.ID, err.Error())

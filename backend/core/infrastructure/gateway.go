@@ -24,7 +24,7 @@ func NewRestaurnatGateway(ctx context.Context, db *sql.DB) RestaurantGateway {
 }
 
 func (l *RestaurantLogic) ListRestaurants(location *coordinates.Point) ([]entities.Restaurant, error) {
-	restaurants, err := l.St.listRestaurantsInDB()
+	restaurants, err := l.St.listRestaurants()
 	if err != nil {
 		return restaurants, err
 	}
@@ -41,17 +41,17 @@ func (l *RestaurantLogic) ListRestaurants(location *coordinates.Point) ([]entiti
 }
 
 func (l *RestaurantLogic) RestaurantCatalog(rstID string, filter *string) (entities.Catalog, error) {
-	rstDBProducts, err := l.St.listRestaurantProductsInDB(rstID)
+	rstProducts, err := l.St.listRestaurantProducts(rstID)
 	if err != nil {
 		return nil, err
 	}
 
 	if filter != nil {
-		rstDBProducts = products.FilterProducts(rstDBProducts, *filter)
+		rstProducts = products.FilterProducts(rstProducts, *filter)
 	}
 
 	// create categories
-	categories := products.CategoriesFromDBProducts(rstDBProducts)
+	categories := products.CategoriesFromProducts(rstProducts)
 
 	return categories, nil
 }

@@ -13,18 +13,17 @@ type Restaurant struct {
 	Open     bool              `json:"open"`
 }
 
-type DBProduct struct {
-	ID            string
-	RestaurantID  string
-	Category      string
-	Name          string
-	Description   string
-	Image         string
-	PriceValue    int
-	PriceCurrency string
+type Product struct {
+	ID           string
+	RestaurantID string
+	Category     string
+	Name         string
+	Description  string
+	Image        string
+	Price        money.Value
 }
 
-type Product struct {
+type CategoryProduct struct {
 	ID          string      `json:"id"`
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
@@ -33,8 +32,8 @@ type Product struct {
 }
 
 type Category struct {
-	Category string    `json:"category"`
-	Products []Product `json:"products"`
+	Category string            `json:"category"`
+	Products []CategoryProduct `json:"products"`
 }
 
 type Catalog []Category

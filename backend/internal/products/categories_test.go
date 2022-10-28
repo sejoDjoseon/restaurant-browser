@@ -8,32 +8,34 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type CategoriesFromDBProductsTest struct {
-	ListProducts     []entities.DBProduct
+type CategoriesFromProductsTest struct {
+	ListProducts     []entities.Product
 	CategoriesResult []entities.Category
 }
 
-var CategoriesFromDBProductsTests = []CategoriesFromDBProductsTest{
+var CategoriesFromProductsTests = []CategoriesFromProductsTest{
 	{
-		ListProducts:     []entities.DBProduct{},
+		ListProducts:     []entities.Product{},
 		CategoriesResult: []entities.Category{},
 	},
-	{ListProducts: []entities.DBProduct{
+	{ListProducts: []entities.Product{
 		{
-			ID:            "111111",
-			RestaurantID:  "111111",
-			Category:      "1",
-			Name:          "name",
-			Description:   "description",
-			Image:         "image",
-			PriceValue:    1,
-			PriceCurrency: "EUR",
+			ID:           "111111",
+			RestaurantID: "111111",
+			Category:     "1",
+			Name:         "name",
+			Description:  "description",
+			Image:        "image",
+			Price: money.Value{
+				Amount:   1,
+				Currency: money.EUR,
+			},
 		},
 	},
 		CategoriesResult: []entities.Category{
 			{
 				Category: "1",
-				Products: []entities.Product{
+				Products: []entities.CategoryProduct{
 					{
 						ID:          "111111",
 						Name:        "name",
@@ -48,32 +50,36 @@ var CategoriesFromDBProductsTests = []CategoriesFromDBProductsTest{
 			},
 		},
 	},
-	{ListProducts: []entities.DBProduct{
+	{ListProducts: []entities.Product{
 		{
-			ID:            "111111",
-			RestaurantID:  "111111",
-			Category:      "1",
-			Name:          "name",
-			Description:   "description",
-			Image:         "image",
-			PriceValue:    1,
-			PriceCurrency: "EUR",
+			ID:           "111111",
+			RestaurantID: "111111",
+			Category:     "1",
+			Name:         "name",
+			Description:  "description",
+			Image:        "image",
+			Price: money.Value{
+				Amount:   1,
+				Currency: money.EUR,
+			},
 		},
 		{
-			ID:            "222222",
-			RestaurantID:  "111111",
-			Category:      "1",
-			Name:          "name",
-			Description:   "description",
-			Image:         "image",
-			PriceValue:    1,
-			PriceCurrency: "EUR",
+			ID:           "222222",
+			RestaurantID: "111111",
+			Category:     "1",
+			Name:         "name",
+			Description:  "description",
+			Image:        "image",
+			Price: money.Value{
+				Amount:   1,
+				Currency: money.EUR,
+			},
 		},
 	},
 		CategoriesResult: []entities.Category{
 			{
 				Category: "1",
-				Products: []entities.Product{
+				Products: []entities.CategoryProduct{
 					{
 						ID:          "111111",
 						Name:        "name",
@@ -98,42 +104,48 @@ var CategoriesFromDBProductsTests = []CategoriesFromDBProductsTest{
 			},
 		},
 	},
-	{ListProducts: []entities.DBProduct{
+	{ListProducts: []entities.Product{
 		{
-			ID:            "111111",
-			RestaurantID:  "111111",
-			Category:      "1",
-			Name:          "name",
-			Description:   "description",
-			Image:         "image",
-			PriceValue:    1,
-			PriceCurrency: "EUR",
+			ID:           "111111",
+			RestaurantID: "111111",
+			Category:     "1",
+			Name:         "name",
+			Description:  "description",
+			Image:        "image",
+			Price: money.Value{
+				Amount:   1,
+				Currency: money.EUR,
+			},
 		},
 		{
-			ID:            "222222",
-			RestaurantID:  "111111",
-			Category:      "1",
-			Name:          "name",
-			Description:   "description",
-			Image:         "image",
-			PriceValue:    1,
-			PriceCurrency: "EUR",
+			ID:           "222222",
+			RestaurantID: "111111",
+			Category:     "1",
+			Name:         "name",
+			Description:  "description",
+			Image:        "image",
+			Price: money.Value{
+				Amount:   1,
+				Currency: money.EUR,
+			},
 		},
 		{
-			ID:            "333333",
-			RestaurantID:  "111111",
-			Category:      "2",
-			Name:          "name",
-			Description:   "description",
-			Image:         "image",
-			PriceValue:    1,
-			PriceCurrency: "EUR",
+			ID:           "333333",
+			RestaurantID: "111111",
+			Category:     "2",
+			Name:         "name",
+			Description:  "description",
+			Image:        "image",
+			Price: money.Value{
+				Amount:   1,
+				Currency: money.EUR,
+			},
 		},
 	},
 		CategoriesResult: []entities.Category{
 			{
 				Category: "1",
-				Products: []entities.Product{
+				Products: []entities.CategoryProduct{
 					{
 						ID:          "111111",
 						Name:        "name",
@@ -158,7 +170,7 @@ var CategoriesFromDBProductsTests = []CategoriesFromDBProductsTest{
 			},
 			{
 				Category: "2",
-				Products: []entities.Product{
+				Products: []entities.CategoryProduct{
 					{
 						ID:          "333333",
 						Name:        "name",
@@ -175,27 +187,27 @@ var CategoriesFromDBProductsTests = []CategoriesFromDBProductsTest{
 	},
 }
 
-func TestCategoriesFromDBProducts(t *testing.T) {
+func TestCategoriesFromProducts(t *testing.T) {
 	t.Parallel()
-	for _, testCase := range CategoriesFromDBProductsTests {
-		assert.Equal(t, testCase.CategoriesResult, CategoriesFromDBProducts(testCase.ListProducts))
+	for _, testCase := range CategoriesFromProductsTests {
+		assert.Equal(t, testCase.CategoriesResult, CategoriesFromProducts(testCase.ListProducts))
 	}
 }
 
-type FilterDBProductsTestCase struct {
-	ListProducts []entities.DBProduct
+type FilterProductsTestCase struct {
+	ListProducts []entities.Product
 	Filter       string
-	Result       []entities.DBProduct
+	Result       []entities.Product
 }
 
-var FilterDBProductTestCases = []FilterDBProductsTestCase{
+var FilterProductTestCases = []FilterProductsTestCase{
 	{
-		ListProducts: []entities.DBProduct{},
+		ListProducts: []entities.Product{},
 		Filter:       "filter",
-		Result:       []entities.DBProduct{},
+		Result:       []entities.Product{},
 	},
 	{
-		ListProducts: []entities.DBProduct{
+		ListProducts: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -204,7 +216,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 			},
 		},
 		Filter: "",
-		Result: []entities.DBProduct{
+		Result: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -214,7 +226,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 		},
 	},
 	{
-		ListProducts: []entities.DBProduct{
+		ListProducts: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -223,10 +235,10 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 			},
 		},
 		Filter: "filter",
-		Result: []entities.DBProduct{},
+		Result: []entities.Product{},
 	},
 	{
-		ListProducts: []entities.DBProduct{
+		ListProducts: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -235,7 +247,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 			},
 		},
 		Filter: "name",
-		Result: []entities.DBProduct{
+		Result: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -245,7 +257,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 		},
 	},
 	{
-		ListProducts: []entities.DBProduct{
+		ListProducts: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -254,7 +266,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 			},
 		},
 		Filter: "descripción",
-		Result: []entities.DBProduct{
+		Result: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -264,7 +276,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 		},
 	},
 	{
-		ListProducts: []entities.DBProduct{
+		ListProducts: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -291,7 +303,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 			},
 		},
 		Filter: "polvorón",
-		Result: []entities.DBProduct{
+		Result: []entities.Product{
 			{
 				ID:          "111111",
 				Category:    "1",
@@ -316,7 +328,7 @@ var FilterDBProductTestCases = []FilterDBProductsTestCase{
 
 func TestFilterProducts(t *testing.T) {
 	t.Parallel()
-	for _, tc := range FilterDBProductTestCases {
+	for _, tc := range FilterProductTestCases {
 		assert.Equal(t, tc.Result, FilterProducts(tc.ListProducts, tc.Filter))
 	}
 }
