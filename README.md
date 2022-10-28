@@ -13,4 +13,8 @@ _This will create a pod with 4 containers running. (App, Server, DB, PgAdmin)_
 
 Then open http://localhost:9000/
 
+## To stop and clean
 
+```bash
+make clean
+```
