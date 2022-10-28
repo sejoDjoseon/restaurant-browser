@@ -44,7 +44,7 @@ INSERT INTO t_restaurant (id, _name, _image, _location)
 VALUES (
     '444444',
     'Pasti Pasti',
-    'asesorexcelente.com/wp-content/uploads/2021/05/bocateria.png',
+    'www.hogarmania.com/archivos/201401/tipos-de-pasta-xl-668x400x80xX.jpg',
     point(41.423411, 2.187579)
 );
 INSERT INTO t_restaurant (id, _name, _image, _location)
@@ -141,7 +141,7 @@ INSERT INTO t_product (
 ) VALUES (
     'p00004',
     '222222',
-    'clasicos',
+    'clásicos',
     'Hamburguesa completa',
     'con todo',
     'asesorexcelente.com/wp-content/uploads/2021/05/bocateria.png',
@@ -161,10 +161,183 @@ INSERT INTO t_product (
 ) VALUES (
     'p00005',
     '222222',
-    'clasicos',
+    'clásicos',
     'Hamburguesa doble',
     'doble hamburguesa',
     'asesorexcelente.com/wp-content/uploads/2021/05/bocateria.png',
     1100,
+    'EUR'
+);
+
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00006',
+    '333333',
+    'clásicos',
+    'poke bowl de taún',
+    'Arroz, tomate, canónigos, atún',
+    'asesorexcelente.com/wp-content/uploads/2021/05/bocateria.png',
+    700,
+    'EUR'
+);
+
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00007',
+    '333333',
+    'clásicos',
+    'poke bowl de taún',
+    'Arroz, tomate, canónigos, atún, salsa de soja',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
+    'EUR'
+);
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00008',
+    '333333',
+    'clásicos',
+    'poke bowl de salmón',
+    'Arroz, piña, lechuga, salmón, salsa teriyaki',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
+    'EUR'
+);
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00009',
+    '333333',
+    'pokemons',
+    'Magikarp',
+    'Quinoa, piña, lechuga, salmón, salsa teriyaki',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
+    'EUR'
+);
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00010',
+    '333333',
+    'pokemons',
+    'Pidgey',
+    'Quinoa, tomate, canónigos, pollo rebozado, salsa teriyaki',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
+    'EUR'
+);
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00011',
+    '333333',
+    'pokemons',
+    'Pickachu',
+    'Arroz, tomate cherry, canónigos, pollo rebozado, salsa soja',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
+    'EUR'
+);
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00012',
+    '333333',
+    'pokemons',
+    'Charmander',
+    'Quinoa, piña, canónigos, salmón flameado, salsa picante',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
+    'EUR'
+);
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00013',
+    '333333',
+    'pokemons',
+    'Bulbasaur',
+    'Quinoa, piña, alcachofa, atún flameado, salsa soja',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
+    'EUR'
+);
+INSERT INTO t_product (
+    id,
+    restaurant_id,
+    _category,
+    _name,
+    _description,
+    _image,
+    _price_value,
+    _price_currency
+) VALUES (
+    'p00014',
+    '333333',
+    'pokemons',
+    'Bulbasaur',
+    'Arroz, mango, lechuga, heura, sesamo',
+    'static.onecms.io/wp-content/uploads/sites/19/2016/08/22/pokeball-poke-bowl-mr.jpg',
+    700,
     'EUR'
 );

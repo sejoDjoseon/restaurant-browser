@@ -4,7 +4,7 @@ import Box from 'components/Box/Box'
 import { Product } from 'models/Catalog'
 import { stringifyMoney } from 'models/Money'
 
-import ProductImg from '../ProductImg/ProductImg'
+import { ImageConainer, ProductImg } from '../ProductImg/ProductImg'
 import { BoxInfo, Price } from './BoxLatout'
 
 interface ProductProps {
@@ -14,7 +14,9 @@ interface ProductProps {
 export default ({ product }: ProductProps) => {
   return (
     <Box>
-      <ProductImg src={`https://${product.image}`} />
+      <ImageConainer>
+        <ProductImg src={`https://${product.image}`} />
+      </ImageConainer>
       <BoxInfo>
         <h4>{product.name}</h4>
         <p>{product.description}</p>

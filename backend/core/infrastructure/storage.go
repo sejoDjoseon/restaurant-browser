@@ -54,10 +54,12 @@ func (s *RestaurantService) listRestaurants() ([]entities.Restaurant, error) {
 
 func parseDBProduct(prDB sqlmodels.DBProduct) entities.Product {
 	return entities.Product{
-		ID:          prDB.ID,
-		Name:        prDB.Name,
-		Description: prDB.Description,
-		Image:       prDB.Image,
+		ID:           prDB.ID,
+		RestaurantID: prDB.RestaurantID,
+		Category:     prDB.Category,
+		Name:         prDB.Name,
+		Description:  prDB.Description,
+		Image:        prDB.Image,
 		Price: money.Value{
 			Amount:   prDB.PriceValue,
 			Currency: money.Currency(prDB.PriceCurrency),
