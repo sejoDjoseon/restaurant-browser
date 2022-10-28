@@ -3,8 +3,7 @@
 To execute the project the only dependency is [podman](https://podman.io/).
 
 
-## Ho to run
-------------
+## How to run
 
 ```bash
 make run
