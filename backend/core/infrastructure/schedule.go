@@ -3,6 +3,10 @@ package restaurant
 var mockRestaurantsOpened = map[string]bool{
 	"111111": true,
 	"222222": false,
+	"333333": true,
+	"444444": true,
+	"555555": true,
+	"666666": false,
 }
 
 type ScheduleService interface {
