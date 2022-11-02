@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from 'react'
 
-import RestaurantsStore from 'stores/Restaurants/RestaurantsStore'
+import { RestaurantsStoreI } from 'stores/Restaurants/RestaurantsStore'
 
 export interface AppContextI {
-  _restaurantsStore: RestaurantsStore
+  _restaurantsStore: RestaurantsStoreI
 }
 
 const AppContext = createContext<AppContextI | null>(null)

@@ -5,7 +5,14 @@ import { Restaurant } from 'models/Restaurants'
 
 import { RestaurantsTransportLayerI } from './RestaurantsTransportLayer'
 
-export default class RestaurantsStore {
+export interface RestaurantsStoreI {
+  restaurants?: Restaurant[]
+  getRestaurants: (location?: Coordinates) => void
+  cleanRestaurants: () => void
+  getRestaurant: (rstID: string) => Promise<Restaurant>
+}
+
+export default class RestaurantsStore implements RestaurantsStoreI {
   @observable
   restaurants?: Restaurant[]
 
