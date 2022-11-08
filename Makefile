@@ -50,7 +50,7 @@ run:
 	podman run -dt --pod=${TAG} --name=db         \
 	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
 	-e POSTGRES_USER=${POSTGRES_USER}         \
-	$(POSTGRES)
+	$(POSTGRES)\:$(VERSION)
 
 	podman run -dt --pod=${TAG} --name=backend     \
 	-e PORT=${BACKEND_PORT}                        \
@@ -59,11 +59,11 @@ run:
 	-e DB_USER=${POSTGRES_USER}                    \
 	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
 	-e DB_NAME=${POSTGRES_USER}                            \
-	$(BACKEND)
+	$(BACKEND)\:$(VERSION)
 
 	podman run -dt --pod=${TAG} --name=frontend    \
 	-e BACKEND_PORT=${BACKEND_PORT}                \
-	$(FRONTEND)
+	$(FRONTEND)\:$(VERSION)
 
 
 rerun-b:
@@ -79,7 +79,7 @@ rerun-b:
 	-e DB_PASSWORD=${POSTGRES_PASSWORD}            \
 	-e DB_NAME=postgres                            \
 	-e DB_NAME=${POSTGRES_USER}                    \
-	$(BACKEND)
+	$(BACKEND)\:$(VERSION)
 
 
 rerun-f:
@@ -89,7 +89,7 @@ rerun-f:
 
 	podman run -dt --pod=${TAG} --name=frontend    \
 	-e BACKEND_PORT=${BACKEND_PORT}                \
-	$(FRONTEND)
+	$(FRONTEND)\:$(VERSION)
 
 
 rerun-db:
@@ -100,7 +100,7 @@ rerun-db:
 	podman run -dt --pod=${TAG} --name=db         \
 	-e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
 	-e POSTGRES_USER=${POSTGRES_USER}         \
-	$(POSTGRES)
+	$(POSTGRES)\:$(VERSION)
 
 
 #   Deletes pod if exists
