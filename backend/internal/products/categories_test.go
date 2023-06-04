@@ -363,3 +363,43 @@ func TestFilterProducts(t *testing.T) {
 		assert.Equal(t, tc.Result, FilterProducts(tc.ListProducts, tc.Filter))
 	}
 }
+
+type FuzzingMatchTestCase struct {
+	Filter string
+	Text   string
+	Result bool
+}
+
+var TestCasesFuzzing = []FuzzingMatchTestCase{
+	{Filter: "hola",
+		Text:   "holacaracola",
+		Result: true,
+	},
+	{Filter: "hl",
+		Text:   "hola",
+		Result: true,
+	},
+	{Filter: "lh",
+		Text:   "hola",
+		Result: false,
+	},
+	{Filter: "hl",
+		Text:   "olahola",
+		Result: true,
+	},
+	{Filter: "hlo",
+		Text:   "olahola",
+		Result: false,
+	},
+	{Filter: "hh",
+		Text:   "hola",
+		Result: false,
+	},
+}
+
+func TestFuzzingMatch(t *testing.T) {
+	t.Parallel()
+	for _, tc := range TestCasesFuzzing {
+		assert.Equal(t, tc.Result, fuzzingMatch(tc.Text, tc.Filter), tc.Filter, tc.Text)
+	}
+}

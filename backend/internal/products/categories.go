@@ -90,3 +90,29 @@ func matchProduct(pr entities.Product, filter string) bool {
 
 	return strings.Contains(sName, filter) || strings.Contains(sDescription, filter) || strings.Contains(sCategory, filter)
 }
+
+func fuzzingMatch(text, filter string) bool {
+	if strings.Contains(text, filter) {
+		return true
+	}
+
+	var result = true
+	var auxText = text
+	for _, char := range filter {
+		auxIndex := strings.Index(auxText, string(char))
+
+		result = auxIndex != -1
+
+		if !result {
+			return false
+		}
+
+		if (auxIndex + 1) == (len(auxText)) {
+			continue
+		}
+		auxText = auxText[auxIndex+1 : len(auxText)]
+
+	}
+
+	return result
+}
